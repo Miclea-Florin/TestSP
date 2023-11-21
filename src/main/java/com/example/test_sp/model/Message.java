@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
-public class Message {
+public class Message implements Visitee {
     private Date date;
     private String message;
     private String house;
@@ -25,9 +25,14 @@ public class Message {
         return new DecoderFactory().createDecoder(this.house).decode(this.message);
     }
 
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
+
     public void print() {
         System.out.println("Message: " + message);
         System.out.println("House: " + house);
-        System.out.println("Date: " + date);
+        System.out.println("Data: " + date);
     }
 }

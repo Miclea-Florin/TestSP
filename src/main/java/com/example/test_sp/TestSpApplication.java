@@ -1,6 +1,7 @@
 package com.example.test_sp;
 
 import com.example.test_sp.model.Message;
+import com.example.test_sp.service.MessageDecoderVisitor;
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DatabindException;
@@ -29,10 +30,19 @@ public class TestSpApplication {
             throw new RuntimeException(e);
         }
 
+        MessageDecoderVisitor visitor = new MessageDecoderVisitor();
+
         for (Message message : messages) {
-            String result = message.decode();
-            System.out.println(result);
+            // message.print();
+
+            // String result = message.decode();
+            // System.out.println(result);
+
+            message.accept(visitor);
         }
+
+        visitor.exportJSON();
+        visitor.print();
     }
 
 }
